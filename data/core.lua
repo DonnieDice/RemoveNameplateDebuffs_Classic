@@ -10,10 +10,16 @@
 RND = RND or {}
 
 -- Constants (cached for performance)
-local ADDON_VERSION = "3.3.7"
-local ADDON_NAME = "RemoveNameplateDebuffs"
-local ICON_PATH = "|Tinterface/addons/RemoveNameplateDebuffs/media/icon:16:16|t"
-local MINIMAP_ICON_TEXTURE = "Interface\\AddOns\\RemoveNameplateDebuffs\\media\\icon"
+local ADDON_VERSION = "3.3.7-classic.2"
+local ADDON_NAME = "RemoveNameplateDebuffs_Classic"
+-- NOTE: flavor variants must use flavor-specific SavedVariables so multiple
+-- installed variants never clobber each other on a shared WTF.
+local SETTINGS_KEY = "RNDClassicSettings"
+local BACKUP_NAMESPACE = "RemoveNameplateDebuffs_Classic"
+_G[SETTINGS_KEY] = _G[SETTINGS_KEY] or {}
+local RNDSettings = _G[SETTINGS_KEY]
+local ICON_PATH = "|Tinterface/addons/RemoveNameplateDebuffs_Classic/media/icon:16:16|t"
+local MINIMAP_ICON_TEXTURE = "Interface\\AddOns\\RemoveNameplateDebuffs_Classic\\media\\icon"
 
 -- Chat prefix with orange R, N, D in [RND]
 local CHAT_PREFIX = ICON_PATH .. " - |cffffffff[|r|cffff7d00RND|r|cffffffff]|r"
@@ -43,7 +49,7 @@ RND.defaultMinimapAngle = 220
 
 -- Durable settings backup inside RGX-Framework's SavedVariables
 -- (RGXFrameworkDB survives RND folder loss and client crashes)
-local BACKUP_NAMESPACE = "RemoveNameplateDebuffs"
+-- (moved: BACKUP_NAMESPACE declared above)
 
 local function GetBackupSettings()
     if not RGX or not RGX.GetDB then return nil end
@@ -67,9 +73,10 @@ end
 
 -- Initialize addon settings
 function RND:InitializeSettings()
-    -- Ensure SavedVariables table exists
-    local settingsWereMissing = (RNDSettings == nil)
-    RNDSettings = RNDSettings or {}
+    -- The variant's SavedVariables global is bound once at file load (WoW
+    -- populates toc SavedVariables before addons run); whether it was empty on
+    -- boot tells us if this session lost or never had settings.
+    local settingsWereMissing = (type(RNDSettings) ~= "table") or (next(RNDSettings) == nil)
 
     -- Restore from the framework backup when the primary SavedVariables
     -- were lost, so a wiped RNDSettings cannot silently re-enable the addon
@@ -116,9 +123,9 @@ function RND:SetSetting(key, value)
         return false
     end
 
-    -- Ensure SavedVariables table exists
-    if not RNDSettings then
-        RNDSettings = {}
+    if type(RNDSettings) ~= "table" then
+        _G[SETTINGS_KEY] = _G[SETTINGS_KEY] or {}
+        RNDSettings = _G[SETTINGS_KEY]
     end
 
     -- Type validation based on default values

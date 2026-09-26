@@ -1,5 +1,5 @@
 ## Interface: 11509,16001,20506,50504
-## Version: v3.3.7-classic.1
+## Version: v3.3.7-classic.2
 ## RequiredDeps: RGX-Framework
 ## Title: |cffff7d00R|r|cffffffffemove|r |cffff7d00N|r|cffffffffameplate|r |cffff7d00D|r|cffffffffebuffs|r|cffff7d00!|r |cffFFD700(Classic)|r
 ## Notes: Classic flavor. Remove Debuff Icons from Enemy Nameplates|n|r   |cffff7d00By DonnieDice|r
@@ -8,7 +8,7 @@
 ## Group: RGX
 ## Email: donniedice@protonmail.com
 ## IconTexture: Interface\AddOns\RemoveNameplateDebuffs_Classic\media\icon.tga
-## SavedVariables: RNDSettings
+## SavedVariables: RNDClassicSettings
 
 ## X-Category: Buffs & Debuffs
 ## X-Website: https://github.com/RGXMods/RemoveNameplateDebuffs_Classic
