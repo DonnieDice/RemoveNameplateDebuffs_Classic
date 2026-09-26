@@ -10,7 +10,7 @@
 RND = RND or {}
 
 -- Constants (cached for performance)
-local ADDON_VERSION = "3.3.7-classic.2"
+local ADDON_VERSION = "3.3.7-classic.3"
 local ADDON_NAME = "RemoveNameplateDebuffs_Classic"
 -- NOTE: flavor variants must use flavor-specific SavedVariables so multiple
 -- installed variants never clobber each other on a shared WTF.
