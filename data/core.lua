@@ -305,7 +305,7 @@ end
 -- Test functionality by toggling nameplates
 function RND:TestFunctionality()
 	if not self.L then
-		print(CHAT_PREFIX .. " |cffff0000Error:|r Localization not loaded")
+		print(CHAT_PREFIX .. " " .. ((self.L and self.L["ERROR_LOCALIZATION"]) or "|cffff0000Error:|r Localization not loaded"))
 		return
 	end
 
@@ -326,13 +326,13 @@ function RND:DisplayWelcomeMessage()
 
 	-- Ensure localization exists
 	if not self.L then
-		print(CHAT_PREFIX .. " |cffff0000Error:|r Localization not loaded")
+		print(CHAT_PREFIX .. " " .. ((self.L and self.L["ERROR_LOCALIZATION"]) or "|cffff0000Error:|r Localization not loaded"))
 		return
 	end
 
 	-- Welcome messages matching RGX Mods standard (same format as BLU)
-	print(CHAT_PREFIX .. " Welcome. " .. self.L["TYPE_HELP"])
-	print(CHAT_PREFIX .. " |cffffff00Version:|r |cff8080ff" .. ADDON_VERSION .. "|r")
+	print(CHAT_PREFIX .. " " .. (self.L["WELCOME_LOGIN"] or "Welcome.") .. " " .. self.L["TYPE_HELP"])
+	print(CHAT_PREFIX .. " " .. string.format(self.L["STATUS_VERSION"] or "|cffffff00Version:|r |cff8080ff%s|r", ADDON_VERSION))
 
 	-- Show community message on first run
 	if self:GetSetting("firstRun") then
@@ -426,7 +426,7 @@ end
 function RND:HandleSlashCommand(args)
 	-- Ensure localization exists
 	if not self.L then
-		print(CHAT_PREFIX .. " |cffff0000Error:|r Localization not loaded")
+		print(CHAT_PREFIX .. " " .. ((self.L and self.L["ERROR_LOCALIZATION"]) or "|cffff0000Error:|r Localization not loaded"))
 		return
 	end
 
@@ -467,14 +467,14 @@ end
 function RND:ShowHelp()
 	-- Ensure localization exists
 	if not self.L then
-		print(CHAT_PREFIX .. " |cffff0000Error:|r Localization not loaded")
+		print(CHAT_PREFIX .. " " .. ((self.L and self.L["ERROR_LOCALIZATION"]) or "|cffff0000Error:|r Localization not loaded"))
 		return
 	end
 
 	print(CHAT_PREFIX .. " " .. self.L["HELP_HEADER"])
 	print(CHAT_PREFIX .. " " .. self.L["HELP_TEST"])
-	print(CHAT_PREFIX .. " |cffffffff/rnd on|r - Enable addon")
-	print(CHAT_PREFIX .. " |cffffffff/rnd off|r - Disable addon")
+	print(CHAT_PREFIX .. " " .. (self.L["HELP_ENABLE"] or "|cffffffff/rnd on|r - Enable addon"))
+	print(CHAT_PREFIX .. " " .. (self.L["HELP_DISABLE"] or "|cffffffff/rnd off|r - Disable addon"))
 	print(CHAT_PREFIX .. " " .. self.L["HELP_STATUS"])
 	print(CHAT_PREFIX .. " |cffffffff/rnd welcome on|r - " .. (self.L["HELP_WELCOME_ON"] or "Enable welcome message"))
 	print(CHAT_PREFIX .. " |cffffffff/rnd welcome off|r - " .. (self.L["HELP_WELCOME_OFF"] or "Disable welcome message"))
@@ -486,7 +486,7 @@ end
 function RND:ShowStatus()
     -- Ensure localization exists
     if not self.L then
-        print(ICON_PATH .. " |cffff0000RND Error:|r Localization not loaded")
+        print(ICON_PATH .. " " .. ((self.L and self.L["ERROR_PREFIX"]) or "|cffff0000RND Error:|r") .. " " .. ((self.L and self.L["ERROR_LOCALIZATION_NO_PREFIX"]) or "Localization not loaded"))
         return
     end
 
@@ -568,7 +568,7 @@ end
 RGX:RegisterSlashCommand("/rnd", function(args)
     local success, errorMsg = pcall(RND.HandleSlashCommand, RND, args)
     if not success then
-        print(ICON_PATH .. " |cffff0000RND Error:|r " .. tostring(errorMsg))
+        print(ICON_PATH .. " " .. ((RND.L and RND.L["ERROR_PREFIX"]) or "|cffff0000RND Error:|r") .. " " .. tostring(errorMsg))
     end
 end, "RND")
 
